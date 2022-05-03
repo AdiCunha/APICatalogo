@@ -8,91 +8,81 @@ namespace APICatalogo.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ProdutosController : ControllerBase
+    public class CategoriasController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public ProdutosController(AppDbContext context)
+        public CategoriasController(AppDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Produto>> Get()
-        {
-            var produtos = _context.Categoria.ToList();
 
-            if (produtos is null)
+        [HttpGet]
+        public ActionResult<IEnumerable<Categoria>> Get()
+        {
+            var categorias = _context.Categorias.ToList();
+
+            if (categorias is null)
             {
                 return NotFound("Produtos não encontrados.");
             }
 
-            return produtos;
+            return categorias;
         }
 
-        [HttpGet("{id:int}", Name ="ObterProduto")]
-        public ActionResult<Produto> Get(int id)
-        {
-            var produto = _context.Categoria.FirstOrDefault(p => p.ProdutoId == id);
 
-            if (produto is null)
+        [HttpGet("{id:int}", Name = "ObterCategoria")]
+        public ActionResult<Categoria> Get(int id)
+        {
+            var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
+
+            if (categoria is null)
             {
                 return NotFound("Produto não encontrado.");
             }
-            return produto;
+            return categoria;
 
         }
 
         [HttpPost]
-        public ActionResult Post(Produto produto)
+        public ActionResult Post(Categoria categoria)
         {
-            _context.Categoria.Add(produto);
+            _context.Categorias.Add(categoria);
             _context.SaveChanges();
 
             return new CreatedAtRouteResult("ObterProduto",
-                new { id = produto.ProdutoId }, produto);
+                new { id = categoria.CategoriaId }, categoria);
         }
 
         [HttpPut]
-        public ActionResult Put(int id, Produto produto)
+        public ActionResult Put(int id, Categoria categoria)
         {
-            if (id != produto.ProdutoId)
+            if (id != categoria.CategoriaId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(produto).State = EntityState.Modified;
+            _context.Entry(categoria).State = EntityState.Modified;
             _context.SaveChanges();
 
-            return Ok(produto);
+            return Ok(categoria);
         }
-
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
-            var produto = _context.Categoria.FirstOrDefault(p =>p.ProdutoId == id);
+            var categoria = _context.Categoria.FirstOrDefault(p => p.CategoriaID == id);
             //var produto = _context.Produtos.Find(id);
 
-
-            if (produto is null)
+            if (categoria is null)
             {
                 return NotFound("Produto não localizado.");
             }
 
-            _context.Categoria.Remove(produto);
+            _context.Categoria.Remove(categoria);
             _context.SaveChanges();
 
-            return Ok(produto);
-
-
-
-
-
-
+            return Ok(categoria);
         }
-
-
-
-
     }
 }
