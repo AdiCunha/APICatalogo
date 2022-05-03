@@ -39,7 +39,7 @@ namespace APICatalogo.Controllers
 
             if (categoria is null)
             {
-                return NotFound("Categoria não encontrado.");
+                return NotFound("Categoria não encontrada.");
             }
             return categoria;
 
