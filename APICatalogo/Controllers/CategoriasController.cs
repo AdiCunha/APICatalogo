@@ -39,7 +39,7 @@ namespace APICatalogo.Controllers
 
             if (categoria is null)
             {
-                return NotFound("Produto não encontrado.");
+                return NotFound("Categoria não encontrado.");
             }
             return categoria;
 
@@ -51,7 +51,7 @@ namespace APICatalogo.Controllers
             _context.Categorias.Add(categoria);
             _context.SaveChanges();
 
-            return new CreatedAtRouteResult("ObterProduto",
+            return new CreatedAtRouteResult("ObterCategoria",
                 new { id = categoria.CategoriaId }, categoria);
         }
 
@@ -76,7 +76,7 @@ namespace APICatalogo.Controllers
 
             if (categoria is null)
             {
-                return NotFound("Produto não localizado.");
+                return NotFound("Categoria não localizado.");
             }
 
             _context.Categoria.Remove(categoria);
