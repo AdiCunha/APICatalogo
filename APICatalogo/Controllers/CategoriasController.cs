@@ -11,12 +11,20 @@ namespace APICatalogo.Controllers
     public class CategoriasController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public CategoriasController(AppDbContext context)
+        public CategoriasController(AppDbContext context, IConfiguration config)
         {
             _context = context;
+            _configuration = config;
         }
 
+        [HttpGet("/Autor")]
+        public string GetAutor()
+        {
+            var autor = _configuration["Autor"];
+            return $"autor: {autor}";
+        }
 
         [HttpGet("saudacao/{nome}")]
         public ActionResult<string> GetSaudacao([FromServices] IMeuServico meuservico, string nome)
