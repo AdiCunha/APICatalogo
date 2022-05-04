@@ -1,6 +1,5 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +31,7 @@ namespace APICatalogo.Controllers
                     "Ocorreu um problema ao tratar a sua solicitação.");
             }
 
-            
+
         }
 
 
@@ -60,7 +59,7 @@ namespace APICatalogo.Controllers
 
 
 
-            
+
         }
 
 
@@ -113,7 +112,7 @@ namespace APICatalogo.Controllers
         public ActionResult Delete(int id)
         {
             var categoria = _context.Categoria.FirstOrDefault(p => p.CategoriaID == id);
-            //var produto = _context.Produtos.Find(id);
+            //var produto = _context.Categoria.Find(id);
 
             if (categoria is null)
             {
