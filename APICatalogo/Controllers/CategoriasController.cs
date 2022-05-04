@@ -17,32 +17,73 @@ namespace APICatalogo.Controllers
             _context = context;
         }
 
+        [HttpGet("produtos")]
+        public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
+        {
+            //return _context.Categorias.Include(p => p.Produtos).ToList();
+            try
+            {
+                return _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <= 5).ToList();
+            }
+            catch (Exception error)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ocorreu um problema ao tratar a sua solicitação.");
+            }
+
+            
+        }
+
 
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            var categorias = _context.Categorias.ToList();
 
-            if (categorias is null)
+            try
             {
-                return NotFound("Produtos não encontrados.");
+                var categorias = _context.Categorias.AsNoTracking().ToList();
+
+                if (categorias is null)
+                {
+                    return NotFound("Produtos não encontrados.");
+                }
+
+                return categorias;
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ocorreu um problema ao tratar a sua solicitação.");
             }
 
-            return categorias;
+
+
+            
         }
 
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public ActionResult<Categoria> Get(int id)
         {
-            var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
 
-            if (categoria is null)
+            try
             {
-                return NotFound("Categoria não encontrada.");
-            }
-            return categoria;
+                var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
 
+                if (categoria is null)
+                {
+                    return NotFound("Categoria não encontrada.");
+                }
+                return categoria;
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ocorreu um problema ao tratar a sua solicitação.");
+            }
         }
 
         [HttpPost]

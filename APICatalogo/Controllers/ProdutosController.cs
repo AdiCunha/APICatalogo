@@ -20,7 +20,7 @@ namespace APICatalogo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            var produtos = _context.Categoria.ToList();
+            var produtos = _context.Categoria.AsNoTracking().ToList();
 
             if (produtos is null)
             {
