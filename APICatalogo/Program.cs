@@ -1,5 +1,7 @@
 using APICatalogo.Context;
 using APICatalogo.Filters;
+using APICatalogo.Repository.Implementacao;
+using APICatalogo.Repository.Interfaces;
 using APICatalogo.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -20,6 +22,7 @@ string SqlConnection = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(SqlConnection)); //utilizado para sqlserver
 
 builder.Services.AddTransient<IMeuServico,MeuServico>();
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 
 
